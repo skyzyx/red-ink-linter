@@ -53,7 +53,8 @@ Turn the linter _on_.
 | `ENABLE_ACTIONLINT`         | `false`       | Enable processing with [Actionlint](https://github.com/rhysd/actionlint).                                                                                              |
 | `ENABLE_CHECKOV`            | `false`       | Enable processing with [Checkov](https://checkov.io).                                                                                                                  |
 | `ENABLE_DOTENV_LINTER`      | `false`       | Enable processing with [dotenv-linter](https://github.com/dotenv-linter/dotenv-linter).                                                                                |
-| `ENABLE_EDITORCONFIG`       | `false`       | Enable processing with [EditorConfig](https://editorconfig.org).                                                                                                       |
+| `ENABLE_EDITORCONFIG`       | `false`       | Enable processing with [EditorConfig](https://editorconfig.org) and [editorconfig-checker](https://github.com/editorconfig-checker/editorconfig-checker).              |
+| `ENABLE_DETECT_SECRETS`     | `false`       | Enable processing with [detect-secrets](https://github.com/Yelp/detect-secrets).                                                                                       |
 | `ENABLE_GITLEAKS`           | `false`       | Enable processing with [Gitleaks](https://gitleaks.io).                                                                                                                |
 | `ENABLE_GO_MOD_TIDY`        | `false`       | Run `go mod tidy -go={target_version}`.                                                                                                                                |
 | `ENABLE_GO_MOD_UPDATE`      | `false`       | Run `go get -u ./...`.                                                                                                                                                 |
@@ -61,13 +62,13 @@ Turn the linter _on_.
 | `ENABLE_GOLANGCI_LINT`      | `false`       | Enable processing with [golangci-lint](https://golangci-lint.run).                                                                                                     |
 | `ENABLE_HADOLINT`           | `false`       | Enable processing with [Hadolint](https://hadolint.github.io/hadolint/).                                                                                               |
 | `ENABLE_MARKDOWNLINT`       | `false`       | Enable processing with [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli) (which wraps [markdownlint](https://github.com/DavidAnson/markdownlint)). |
-| `ENABLE_PRECOMMIT`          | `false`       | Enable processing with [pre-commit](https://pre-commit.com).                                                                                                           |
 | `ENABLE_PRETTY_JSON`        | `false`       | Rewrite JSON files in pretty-printed format.                                                                                                                           |
 | `ENABLE_PYUPGRADE`          | `false`       | Enable processing with [pyupgrade](https://github.com/asottile/pyupgrade).                                                                                             |
 | `ENABLE_REORDER_PY_IMPORTS` | `false`       | Enable processing with [reorder-python-imports](https://github.com/asottile/reorder-python-imports).                                                                   |
 | `ENABLE_SHELLCHECK`         | `false`       | Enable processing with [Shellcheck](https://www.shellcheck.net).                                                                                                       |
 | `ENABLE_SHFMT`              | `false`       | Enable processing with [shfmt](https://github.com/mvdan/sh).                                                                                                           |
 | `ENABLE_TERRAFORM_FMT`      | `false`       | Enable formatting Terraform files.                                                                                                                                     |
+| `ENABLE_TERRAFORM_LOCK_ALL` | `false`       | Enable generating a [Terraform lock file](https://developer.hashicorp.com/terraform/cli/commands/providers/lock) which contains all appropriate platforms.             |
 | `ENABLE_TERRAFORM_VALIDATE` | `false`       | Enable validating Terraform projects.                                                                                                                                  |
 | `ENABLE_TERRASCAN`          | `false`       | Enable processing with [Terrascan](https://runterrascan.io).                                                                                                           |
 | `ENABLE_TFLINT`             | `false`       | Enable processing with [tflint](https://github.com/terraform-linters/tflint).                                                                                          |
@@ -95,39 +96,39 @@ Turn the linter _on_.
 
 Once the linter is _on_, you can configure it.
 
-| ENV VAR                       | Default Value             | Notes                                                                                                               |
-|-------------------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `GO_MOD_TIDY_ARGS`            | `[-go=1.19]`              |                                                                                                                     |
-| `REORDER_PY_IMPORTS_ARGS`     | `[]`                      |                                                                                                                     |
-| `PYUPGRADE_PYTHON_TARGET`     | `py38-plus`               |                                                                                                                     |
-| `LARGE_FILES_MAX_KB`          | `500`                     |                                                                                                                     |
-| `ACTIONLINT_ARGS`             | `[]`                      | Additional arguments passed to `actionlint` command.                                                                |
-| `ACTIONLINT_CONFIG`           | `actionlint.yml`          | Filename for [Actionlint configuration](https://github.com/rhysd/actionlint/blob/main/docs/config.md).              |
-| `CHECKOV_ARGS`                | `[]`                      | Additional arguments passed to `checkov` command.                                                                   |
-| `CHECKOV_CONFIG`              | `.checkov.yml`            | Filename for [checkov configuration](https://www.checkov.io).                                                       |
-| `EDITORCONFIG_CHECKER_CONFIG` | `.ecrc`                   | Filename for [editorconfig-checker configuration](https://github.com/editorconfig-checker/editorconfig-checker).    |
-| `EDITORCONFIG_CONFIG`         | `.editorconfig`           | Filename for [editorconfig configuration]().                                                                        |
-| `GITHUB_API_URL`              | `https://api.github.com`  | Specify a custom GitHub API URL in case GitHub Enterprise is used (e.g., `https://github.myenterprise.com/api/v3`). |
-| `GITHUB_DOMAIN`               | `github.com`              | Specify a custom GitHub domain in case GitHub Enterprise is used (e.g., `github.myenterprise.com`).                 |
-| `GITLEAKS_CONFIG`             | `.gitleaks.toml`          | Filename for [GitLeaks configuration](https://github.com/zricethezav/gitleaks#configuration).                       |
-| `HADOLINT_ARGS`               | `[]`                      | Additional arguments passed to `hadolint` command.                                                                  |
-| `HADOLINT_CONFIG`             | `.hadolint.yaml`          | Filename for [hadolint configuration](https://github.com/hadolint/hadolint).                                        |
-| `MARKDOWNLINT_ARGS`           | `[]`                      | Additional arguments passed to `markdownlint-cli` command.                                                          |
-| `MARKDOWNLINT_CONFIG`         | `.markdownlint.json`      | Filename for [Markdownlint configuration](https://github.com/DavidAnson/markdownlint#optionsconfig).                |
-| `PRECOMMIT_ARGS`              | `[]`                      | Additional arguments passed to `pre-commit` command.                                                                |
-| `PRECOMMIT_CONFIG`            | `.pre-commit-config.yaml` | Filename for [pre-commit configuration](https://pre-commit.com).                                                    |
-| `SHELLCHECK_ARGS`             | `[]`                      | Additional arguments passed to `shellcheck` command.                                                                |
-| `SHELLCHECK_SEVERITY`         | `style`                   | Specify the minimum severity of errors to consider in Shellcheck.                                                   |
-| `SHFMT_ARGS`                  | `[]`                      | Additional arguments passed to `shfmt` command.                                                                     |
-| `TERRASCAN_ARGS`              | `[]`                      | Additional arguments passed to `terrascan` command.                                                                 |
-| `TERRASCAN_CONFIG`            | `terrascan.toml`          | Filename for [terrascan configuration](https://github.com/accurics/terrascan).                                      |
-| `TFLINT_ARGS`                 | `[]`                      | Additional arguments passed to `tflint` command.                                                                    |
-| `TFLINT_CONFIG`               | `.tflint.hcl`             | Filename for [tflint configuration](https://github.com/terraform-linters/tflint)                                    |
-| `TRIVY_ARGS`                  | `[]`                      | Additional arguments passed to `trivy` command.                                                                     |
-| `TRIVY_CONFIG`                | `trivy.yaml`              | Filename for [trivy configuration](https://aquasecurity.github.io/trivy/latest/docs/configuration/).                |
-| `YAMLFMT_CONFIG`              | `.yamlfmt.yml`            | Filename for [Yamlfmt configuration](https://github.com/google/yamlfmt/blob/main/docs/config-file.md).              |
-| `YAPF_ARGS`                   | `[]`                      | Additional arguments passed to `yapf` command.                                                                      |
-| `YAPF_CONFIG`                 | `.style.yapf`             | Filename for [yapf configuration](https://github.com/google/yapf#knobs).                                            |
+| ENV VAR                       | Default Value                                                           | Notes                                                                                                               |
+|-------------------------------|-------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| `ACTIONLINT_ARGS`             | `[]`                                                                    | Additional arguments passed to the `actionlint` command.                                                            |
+| `ACTIONLINT_CONFIG`           | `actionlint.yml`                                                        | Filename for [Actionlint configuration](https://github.com/rhysd/actionlint/blob/main/docs/config.md).              |
+| `CHECKOV_ARGS`                | `[]`                                                                    | Additional arguments passed to the `checkov` command.                                                               |
+| `CHECKOV_CONFIG`              | `.checkov.yml`                                                          | Filename for [checkov configuration](https://www.checkov.io).                                                       |
+| `EDITORCONFIG_CHECKER_CONFIG` | `.ecrc`                                                                 | Filename for [editorconfig-checker configuration](https://github.com/editorconfig-checker/editorconfig-checker).    |
+| `EDITORCONFIG_CONFIG`         | `.editorconfig`                                                         | Filename for [editorconfig configuration](https://editorconfig.org).                                                |
+| `FIXME_TODO_KEYWORDS`         | `[FIXME, TODO]`                                                         | Words to look for in the source code.                                                                               |
+| `GITHUB_API_URL`              | `https://api.github.com`                                                | Specify a custom GitHub API URL in case GitHub Enterprise is used (e.g., `https://github.myenterprise.com/api/v3`). |
+| `GITHUB_DOMAIN`               | `github.com`                                                            | Specify a custom GitHub domain in case GitHub Enterprise is used (e.g., `github.myenterprise.com`).                 |
+| `GITLEAKS_CONFIG`             | `.gitleaks.toml`                                                        | Filename for [GitLeaks configuration](https://github.com/zricethezav/gitleaks#configuration).                       |
+| `GO_MOD_TIDY_ARGS`            | `[-go=1.19]`                                                            | Additional arguments passed to the `go mod tidy` command.                                                           |
+| `HADOLINT_ARGS`               | `[]`                                                                    | Additional arguments passed to the `hadolint` command.                                                              |
+| `HADOLINT_CONFIG`             | `.hadolint.yaml`                                                        | Filename for [hadolint configuration](https://github.com/hadolint/hadolint).                                        |
+| `LARGE_FILES_MAX_KB`          | `768`                                                                   | The maximum number of kilobytes a file can be without triggering a failure.                                         |
+| `MARKDOWNLINT_ARGS`           | `[]`                                                                    | Additional arguments passed to the `markdownlint-cli` command.                                                      |
+| `MARKDOWNLINT_CONFIG`         | `.markdownlint.json`                                                    | Filename for [Markdownlint configuration](https://github.com/DavidAnson/markdownlint#optionsconfig).                |
+| `PYUPGRADE_PYTHON_TARGET`     | `py38-plus`                                                             | The version of Python to target.                                                                                    |
+| `REORDER_PY_IMPORTS_ARGS`     | `[]`                                                                    | Additional arguments passed to the `reorder-python-imports` command.                                                |
+| `SHELLCHECK_ARGS`             | `[]`                                                                    | Additional arguments passed to the `shellcheck` command.                                                            |
+| `SHELLCHECK_SEVERITY`         | `style`                                                                 | Specify the minimum severity of errors to consider in Shellcheck.                                                   |
+| `SHFMT_ARGS`                  | `[]`                                                                    | Additional arguments passed to the `shfmt` command.                                                                 |
+| `TERRAFORM_LOCK_PLATFORMS`    | `[darwin_amd64, darwin_arm64, linux_amd64, linux_arm64, windows_amd64]` | Platforms to build the Terraform lockfile for.                                                                      |
+| `TERRASCAN_ARGS`              | `[]`                                                                    | Additional arguments passed to the `terrascan` command.                                                             |
+| `TERRASCAN_CONFIG`            | `terrascan.toml`                                                        | Filename for [terrascan configuration](https://github.com/accurics/terrascan).                                      |
+| `TFLINT_ARGS`                 | `[]`                                                                    | Additional arguments passed to the `tflint` command.                                                                |
+| `TFLINT_CONFIG`               | `.tflint.hcl`                                                           | Filename for [tflint configuration](https://github.com/terraform-linters/tflint)                                    |
+| `TRIVY_ARGS`                  | `[]`                                                                    | Additional arguments passed to the `trivy` command.                                                                 |
+| `TRIVY_CONFIG`                | `trivy.yaml`                                                            | Filename for [trivy configuration](https://aquasecurity.github.io/trivy/latest/docs/configuration/).                |
+| `YAMLFMT_CONFIG`              | `.yamlfmt.yml`                                                          | Filename for [Yamlfmt configuration](https://github.com/google/yamlfmt/blob/main/docs/config-file.md).              |
+| `YAPF_ARGS`                   | `[]`                                                                    | Additional arguments passed to the `yapf` command.                                                                  |
+| `YAPF_CONFIG`                 | `.style.yapf`                                                           | Filename for [yapf configuration](https://github.com/google/yapf#knobs).                                            |
 
 <!--
 | `ESLINT_CONFIG`               | `.eslintrc.yml`           | Filename for [ESLint configuration](https://eslint.org/docs/user-guide/configuring#configuration-file-formats).                                                        |
@@ -138,7 +139,16 @@ Once the linter is _on_, you can configure it.
 | `PYLINT_CONFIG`               | `.python-lint`            | Filename for [pylint configuration](https://pylint.pycqa.org/en/latest/user_guide/run.html?highlight=rcfile#command-line-options).                                     |
 | `STYLELINT_CONFIG`            | `.stylelintrc.json`       | Filename for [Stylelint configuration](https://github.com/stylelint/stylelint).                                                                                        |
 | `YAMLLINT_CONFIG`             | `.yamllint.yml`           | Filename for [Yamllint configuration](https://yamllint.readthedocs.io/en/stable/configuration.html).                                                                   |
+
 https://github.com/adrienverge/yamllint
+https://github.com/adamchainz/flake8-logging
+https://github.com/adamchainz/flake8-comprehensions
+https://github.com/adamchainz/flake8-no-pep420
+https://check-jsonschema.readthedocs.io/en/latest/usage.html
+
+https://github.com/gruntwork-io/pre-commit
+packer-validate: Automatically run packer validate on all Packer code (*.pkr.* files).
+terragrunt-hclfmt: Automatically run terragrunt hclfmt on all Terragrunt configurations.
 -->
 
 ### Step three
@@ -151,6 +161,7 @@ Other general checks and settings.
 | `ENABLE_CHECK_CASE_CONFLICT`       | `false`       | Check for files with names that would conflict on a case-insensitive filesystem like macOS HFS+ or Windows FAT.             |
 | `ENABLE_CHECK_END_OF_FILE`         | `false`       | Check that files end in a newline and only a newline.                                                                       |
 | `ENABLE_CHECK_EXEC_HAS_SHEBANG`    | `false`       | Check non-binary executables for a proper shebang. May run alongside `ENABLE_CHECK_SHEBANG_HAS_EXEC`.                       |
+| `ENABLE_CHECK_FIXME_TODO`          | `false`       | Check that there are no `FIXME` and `TODO` markers in the newly-written code.                                               |
 | `ENABLE_CHECK_LARGE_FILES`         | `false`       | Check for files that are large, and flag them as needing to move to [Git LFS](https://git-lfs.com).                         |
 | `ENABLE_CHECK_LINE_ENDINGS`        | `false`       | Check that line endings bytes match what is expected.                                                                       |
 | `ENABLE_CHECK_MERGE_CONFLICT`      | `false`       | Check for files which contain merge conflict markers and `core.whitespace` errors.                                          |
